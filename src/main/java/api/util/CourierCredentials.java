@@ -1,3 +1,7 @@
+package api.util;
+
+import api.model.Courier;
+
 public class CourierCredentials {
 
     private String login;

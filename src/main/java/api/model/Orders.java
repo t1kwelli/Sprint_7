@@ -1,3 +1,5 @@
+package api.model;
+
 import java.util.List;
 
 public class Orders {
@@ -17,9 +19,9 @@ public class Orders {
 
     private String comment;
 
-    private List <String> color;
+    private List<String> color;
 
-    public Orders (String firstName, String lastName, String address, String metroStation, String phone, Number rentTime, String deliveryDate, String comment, List color) {
+    public Orders(String firstName, String lastName, String address, String metroStation, String phone, Number rentTime, String deliveryDate, String comment, List color) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;

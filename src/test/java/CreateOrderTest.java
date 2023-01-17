@@ -1,3 +1,5 @@
+import api.client.OrdersClient;
+import api.model.Orders;
 import io.restassured.response.ValidatableResponse;
 import io.qameta.allure.Description;
 import org.junit.Before;
@@ -13,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 public class CreateOrderTest {
 
     private Orders orders;
-
     private OrdersClient ordersClient;
 
     @Before
@@ -41,7 +42,7 @@ public class CreateOrderTest {
 
     @Test
     @Description("Проверка создания заказа")
-    public void CreateOrderTest() {
+    public void createOrderTest() {
         ValidatableResponse responseOrder = ordersClient.create(orders);
 
         int statusCode = responseOrder.extract().statusCode();

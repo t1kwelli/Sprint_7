@@ -1,3 +1,7 @@
+import api.client.CourierClient;
+import api.model.Courier;
+import api.util.CourierCredentials;
+import api.util.CourierGenerator;
 import io.restassured.response.ValidatableResponse;
 import io.qameta.allure.Description;
 import org.junit.After;
@@ -22,13 +26,12 @@ public class LoginCourierTest {
 
     @After
     public void cleanUp() {
-        if(id > 0)
-        courierClient.delete(id);
+        if(id > 0) courierClient.delete(id);
     }
 
     @Test
     @Description("Проверка на то что курьер может авторизоваться и на то что успешный запрос возвращает id")
-    public void SuccessLoginCourierTest() {
+    public void successLoginCourierTest() {
         ValidatableResponse loginResponse = courierClient.login(CourierCredentials.from(courier));
 
         id = loginResponse.extract().path("id");
@@ -42,53 +45,53 @@ public class LoginCourierTest {
 
     @Test
     @Description("Проверка авторизации курьера без поля \"логин\" (на то что поле обязательное и если его нет, то возвращается ошибка)")
-    public void LoginCourierWithoutLogin() {
+    public void loginCourierWithoutLogin() {
         courier = CourierGenerator.getWithoutLogin();
         ValidatableResponse loginResponse = courierClient.login(CourierCredentials.from(courier));
 
         String message = loginResponse.extract().path("message");
         int statusCode = loginResponse.extract().statusCode();
 
-        assertEquals("Недостаточно данных для входа", message);
         assertEquals(400, statusCode);
+        assertEquals("Недостаточно данных для входа", message);
     }
 
     @Test
     @Description("Проверка авторизации курьера без поля \"Пароль\" (на то что поле обязательное и если его нет, то возвращается ошибка)")
-    public void LoginCourierWithoutPassword() {
+    public void loginCourierWithoutPassword() {
         courier = CourierGenerator.getWithoutPassword();
         ValidatableResponse loginResponse = courierClient.login(CourierCredentials.from(courier));
 
         String message = loginResponse.extract().path("message");
         int statusCode = loginResponse.extract().statusCode();
 
-        assertEquals("Недостаточно данных для входа", message);
         assertEquals(400, statusCode);
+        assertEquals("Недостаточно данных для входа", message);
     }
 
     @Test
     @Description("Проверка авторизации курьера с несуществующим/неверным логином")
-    public void LoginCourierWithIncorrectLogin() {
+    public void loginCourierWithIncorrectLogin() {
         courier = CourierGenerator.getWithIncorrectLogin();
         ValidatableResponse loginResponse = courierClient.login(CourierCredentials.from(courier));
 
         String message = loginResponse.extract().path("message");
         int statusCode = loginResponse.extract().statusCode();
 
-        assertEquals("Учетная запись не найдена", message);
         assertEquals(404, statusCode);
+        assertEquals("Учетная запись не найдена", message);
     }
 
     @Test
     @Description("Проверка авторизации курьера с несуществующим/неверным паролем")
-    public void LoginCourierWithIncorrectPassword() {
+    public void loginCourierWithIncorrectPassword() {
         courier = CourierGenerator.getWithIncorrectPassword();
         ValidatableResponse loginResponse = courierClient.login(CourierCredentials.from(courier));
 
         String message = loginResponse.extract().path("message");
         int statusCode = loginResponse.extract().statusCode();
 
-        assertEquals("Учетная запись не найдена", message);
         assertEquals(404, statusCode);
+        assertEquals("Учетная запись не найдена", message);
     }
 }

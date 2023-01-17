@@ -1,4 +1,6 @@
-import com.github.javafaker.Faker;
+package api.util;
+
+import api.model.Courier;
 
 public class CourierGenerator {
 
